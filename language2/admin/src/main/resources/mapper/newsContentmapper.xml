@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hzxy.admin.dao.NewsDao" >
+ <sql id="base_news">
+      id,
+      ftitle,
+      stitle,
+      content,
+      created,
+      updated
+ </sql>
+
+
+
+
+    <!--查看表中的所有记录-->
+    <select id="selectAll" resultType="com.hzxy.domain.entity.News">
+        SELECT
+        <include refid="base_news"/>
+        from
+        news
+    </select>
+
+    <!--根据ID查找记录-->
+    <select id="selectById" resultType="com.hzxy.domain.entity.News">
+        SELECT
+        <include refid="base_news" />
+        from news
+        WHERE
+       id = #{id}
+    </select>
+
+
+    <!--插入记录-->
+    <insert id="insert" parameterType="com.hzxy.domain.entity.News">
+
+        INSERT  INTO news
+        (
+          ftitle,
+          stitle,
+          content,
+          created,
+          updated
+        )
+        VALUES
+        (
+          #{ftitle},
+          #{stitle},
+          #{content},
+          #{created},
+          #{updated}
+        )
+
+    </insert>
+
+
+    <!--根据id删除记录-->
+    <delete id="deleteById" parameterType="long">
+        delete from   news WHERE  id=#{id}
+    </delete>
+
+
+
+    <!--批量删除-->
+    <delete id="deleteByTrap" >
+        delete from  news where id in (
+
+        #{id}
+
+        )
+    </delete>
+
+
+    <!--更改内容信息11-->
+    <update id="update" parameterType="com.hzxy.domain.entity.News">
+        UPDATE news SET
+          ftitle=#{ftitle},
+          stitle=#{stitle},
+          content=#{content},
+          updated=#{updated}
+
+        WHERE id= #{id}
+    </update>
+
+
+</mapper>

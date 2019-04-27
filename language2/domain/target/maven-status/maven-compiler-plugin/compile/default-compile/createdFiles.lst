@@ -1,0 +1,12 @@
+com\hzxy\domain\utils\BeanValidator.class
+com\hzxy\domain\entity\News.class
+com\hzxy\domain\entity\PageInfo.class
+com\hzxy\domain\entity\Category.class
+com\hzxy\domain\utils\ResultModel.class
+com\hzxy\domain\entity\AreaContent.class
+com\hzxy\domain\utils\BaseResult.class
+com\hzxy\domain\entity\User.class
+com\hzxy\domain\entity\XiangYin.class
+com\hzxy\domain\utils\ResultTools.class
+com\hzxy\domain\utils\pageResult.class
+com\hzxy\domain\utils\contentResult.class

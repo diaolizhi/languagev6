@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <th:block th:include="include/header-plugins :: header"></th:block>
+    <title>新增内容</title>
+    <script src="/static/js/upload.js"></script>
+    <script src="/static/jquery/validate/jquery.validate.min.js"></script>
+    <script src="/static/jquery/validate/localization/messages_zh.js"></script>
+    <!--wangEditor-->
+    <link href="https://cdn.staticfile.org/wangEditor/10.0.13/wangEditor.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/wangEditor/10.0.13/wangEditor.min.js"></script>
+
+
+
+
+    <style>
+
+        #dropzone, #dropzone1 {
+            font-family: "Open Sans", Arial, sans-serif;
+            font-size: 13px;
+            direction: ltr;
+            line-height: 1.42857143;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            box-sizing: border-box;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.03);
+            border-radius: 3px;
+            background: rgba(0,0,0,0.03);
+            position: relative;
+            color: #545454;
+
+            max-height: 160px !important;
+            min-height:160px !important;
+
+            min-width:346px !important;
+
+        }
+
+
+    </style>
+
+</head>
+<body style="min-height:800px; height: auto">
+<div class="container-fluid">
+
+    <nav class="navbar navbar-default row no-yj  navbar-fixed-top" th:include="include/common :: nav">
+    </nav>
+
+
+    <div class="row" style="margin-top:70px" >
+        <div class="  nav-left col-md-2 no-padding" id="nav-list-left" th:include="include/common :: left_menu"></div>
+
+        <div class="col-md-1"></div>
+
+        <div class="main-right  col-md-8 col-md-offset-2">
+            <!-- tile header -->
+            <div class="tile-header panel" style="background-color:#f5f5f5;" >
+                <div class="panel-heading bk-bg-primary">
+                    <h4 class="glyphicon glyphicon-align-justify" ><i></i>新增内容 </h4>
+                </div>
+            </div>
+            <!-- /tile header -->
+
+            <!-- tile body -->
+            <div class="tile-body  panel" style="background-color:#f5f5f5;">
+                <form  class="form-horizontal" action="/content/save" method="post" >
+                    <div>
+                        <div class="row">
+
+                            <div class="form-group col-md-6">
+                                <label class="col-sm-4 control-label" for="categoryId">父级目录*</label>
+                                <div class="col-sm-8">
+                                    <input type="hidden" class="form-control" id="categoryId" name="category.id" required />
+                                    <input id="categoryName" name="category.name" class="form-control" placeholder="请选择对应的区域id"   readonly="true" data-toggle="modal" data-target="#myModal" required/>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="yanyu">谚语俗语*</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="yanyu" name="yanyu"   placeholder="请输入谚语"  >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="geyao">歌谣*</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="geyao" name="geyao"   placeholder="请输入歌谣"  >
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="gushi">故事*</label>
+                                <div class="col-sm-9">
+                                    <textarea   id="gushi" name="gushi" rows="9" class="form-control" placeholder="内容"  ></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="jinji">简介</label>
+                                <div class="col-sm-9">
+                                    <textarea   id="jinji" name="jinji" rows="9" class="form-control" placeholder="简介内容"  ></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="qiyu">暨语</label>
+                                <div class="col-sm-9">
+                                    <textarea   id="qiyu" name="qiyu" rows="9" class="form-control" placeholder="暨语内容" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="pic1">图片1</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="pic1"  name="pic1" placeholder="图片1"  />
+                                    <input  type="file" id="p1"/>
+                                    <p  onclick="submit1();" style="width: 40px;height: 20px; background-color: #444444;color: white;">提交</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="pic2">图片2</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="pic2"  name="pic2" placeholder="图片2"  />
+                                    <input  type="file" id="p2"/>
+                                    <p  onclick="submit2();" style="width: 40px;height: 20px; background-color: #444444;color: white;">提交</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                           <div class="form-group col-md-12">
+                               <label class="col-sm-2 control-label" for="pic3">图片3</label>
+                               <div class="col-sm-9">
+                                   <input type="text" class="form-control" id="pic3"  name="pic3" placeholder="图片3" />
+                                   <input  type="file" id="p3">
+                                   <p  onclick="submit3();" style="width: 40px;height: 20px; background-color: #444444;color: white;">提交</p>
+                               </div>
+                           </div>
+                       </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="pic4">图片4</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="pic4"  name="pic4" placeholder="图片4"  />
+                                    <input  type="file" id="p4"/>
+                                    <p  onclick="submit4();" style="width: 40px;height: 20px; background-color: #444444;color: white;">提交</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="video1">视频1</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="video1"  name="video1" placeholder="视频1" />
+                                    <input  type="file" id="v1"/>
+                                    <p  onclick="submit5();" style="width: 40px;height: 20px; background-color: #444444;color: white;">提交</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="video1">视频2</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="video2"  name="video2" placeholder="视频2" />
+                                    <input  type="file" id="v2"/>
+                                    <p  onclick="submit6();" style="width: 40px;height: 20px; background-color: #444444;color: white;">提交</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="video1">视频3</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="video3"  name="video3" placeholder="视频3" />
+                                    <input  type="file" id="v3"/>
+                                    <p  onclick="submit7();" style="width: 40px;height: 20px; background-color: #444444;color: white;">提交</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-2 control-label" for="video1">视频4</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="video4"  name="video4" placeholder="视频4" />
+                                    <input  type="file" id="v4"/>
+                                    <p  onclick="submit8();" style="width: 40px;height: 20px; background-color: #444444;color: white;">提交</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row" >
+
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-1 control-label" for="content">内容</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="content" name="content"   >
+                                    <div id="editor" class="editor"></div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+                  <!--模态框-->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        请选择
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="modal-message">
+                                    <ul id="myTree" class="ztree">
+                                    </ul>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary" id="btnModalOk" >
+                                        确定
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--模态框结束-->
+                    <div class="actions">
+                        <input type="button" class="btn btn-info button-previous" name="previous" onclick="history.go(-1);"  value="返回" />
+                        <input type="submit" id="btnSubmit" class="btn btn-primary button-next pull-right" name="next" value="提交" />
+                        <input type="button" class="btn btn-success button-finish pull-right" name="finish" value="Finish" style="display:none"/>
+                    </div>
+
+                </form>
+
+
+
+            </div>
+            <!-- /tile body -->
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+</body>
+</html>
+
+<script>
+
+
+
+
+    function fileUpload(id,inputid,url){
+
+        var formData = new FormData();
+        formData.append('file', $(id)[0].files[0]);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function(res) {
+            confirm("文件上传成功！");
+            $(inputid).val(res);
+
+
+
+        }).fail(function(res) {
+            confirm("文件上传失败！");
+        });
+
+    }
+
+    wanditorUpload("#content");
+
+    function submit1() {
+     fileUpload("#p1","#pic1", '/uploadimg');
+    }
+    function submit2() {
+        fileUpload("#p2","#pic2", '/uploadimg');
+
+    }
+    function submit3() {
+        fileUpload("#p3","#pic3", '/uploadimg');
+
+    }
+    function submit4() {
+        fileUpload("#p4","#pic4", '/uploadimg');
+    }
+
+    function submit5() {
+        fileUpload("#v1","#video1", '/uploadvideo');
+    }
+    function submit6() {
+        fileUpload("#v2","#video2", '/uploadvideo');
+
+    }
+    function submit7() {
+        fileUpload("#v3","#video3", '/uploadvideo');
+
+    }
+    function submit8() {
+        fileUpload("#v4","#video4", '/uploadvideo');
+    }
+
+
+
+
+    /*zTreeTable*/
+
+    $(function () {
+        var setting={
+            async:{
+                enable:true,
+                url:"/content/category/tree/data",
+                autoParam:["id"]
+
+            }
+        };
+        $.fn.zTree.init($("#myTree"),setting);
+        $("#btnModalOk").bind("click",function () {
+            var zTree=$.fn.zTree.getZTreeObj("myTree");
+            var nodes=zTree.getSelectedNodes();
+            //未选择
+            if(nodes.length==0){
+                alert("请选择一个节点");
+            }else {//已选择
+                var node=nodes[0];
+                $("#categoryId").val(node.id);
+                $("#categoryName").val(node.name);
+                $("#myModal").modal("hide")
+            }
+
+        })
+    });
+
+    /*表单验证*/
+    $().ready(function() {
+        $("#contentForm").validate();
+    });
+
+
+</script>
+

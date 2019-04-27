@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hzxy.admin.dao.UserDao" >
+
+    <sql id="base-column">
+    id,username,password,email,phone,forgetp,created,updated
+</sql>
+
+    <!--查询所有用户 -->
+    <select id="selectAll" resultType="com.hzxy.domain.entity.User">
+        SELECT
+        <include refid="base-column"/>
+        FROM
+        user
+    </select>
+
+
+
+    <!--根据用户名和密码登录-->
+    <select id="login" resultType="com.hzxy.domain.entity.User">
+        SELECT
+        <include refid="base-column"/>
+        FROM
+        user where
+        username=#{username} AND
+        password=#{password}
+    </select>
+
+
+    <!--根据用户id查询用户-->
+    <select id="selectById" resultType="com.hzxy.domain.entity.User">
+        SELECT
+        <include refid="base-column"/>
+        FROM
+        USER
+        where id=#{id}
+    </select>
+
+    <!--根据用户id查询用户-->
+    <select id="selectByforget" resultType="com.hzxy.domain.entity.User">
+        SELECT
+        <include refid="base-column"/>
+        FROM
+        USER
+        WHERE forgetp= #{forgetp}
+    </select>
+
+
+    <!--根据id更新用户-->
+    <update id="update" parameterType="com.hzxy.domain.entity.User">
+        UPDATE USER  SET
+        username=#{username},
+        password=#{password},
+        phone=#{phone},
+        email=#{email},
+        updated=#{updated}
+         WHERE id= #{id}
+    </update>
+
+    <!--根据口令更新用户-->
+    <update id="reset" parameterType="com.hzxy.domain.entity.User">
+
+        UPDATE USER  SET
+        username=#{username},
+        password=#{password},
+        phone=#{phone},
+        email=#{email},
+        updated=#{updated}
+         WHERE id= #{id}
+    </update>
+
+
+    <!--根据用户的id删除用户-->
+    <delete id="deleteById" parameterType="long">
+        delete from USER WHERE  id=#{id}
+    </delete>
+
+</mapper>

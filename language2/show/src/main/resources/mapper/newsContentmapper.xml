@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hzxy.show.dao.NewsDao" >
+ <sql id="base_news">
+      id,
+      ftitle,
+      stitle,
+      content,
+      created,
+      updated
+ </sql>
+
+
+
+
+    <!--查看表中的所有内容-->
+    <select id="findAll" resultType="com.hzxy.domain.entity.News">
+        SELECT
+        <include refid="base_news"/>
+        from
+        news
+        ORDER  by updated  desc
+    </select>
+
+    <!--查看表中的所有内容-->
+    <select id="selectById" resultType="com.hzxy.domain.entity.News">
+        SELECT
+        <include refid="base_news"/>
+        from
+        news
+        As a
+        where a.id=#{id}
+    </select>
+
+
+    <!--查询记录数-->
+    <select id="count" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM news
+    </select>
+
+
+
+
+</mapper>

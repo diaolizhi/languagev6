@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hzxy.show.dao.CategoryDao" >
+    <sql id="tbContentCategoryColumns">
+        a.id,
+        a.name,
+        a.status,
+        a.sort_order AS sortOrder,
+        a.is_parent AS isParent,
+        a.created,
+        a.updated,
+        IFNULL (b.id, '0') AS "parent.id",
+        IFNULL (b.name, '/') AS "parent.name"
+    </sql>
+
+
+
+    <sql id="tbContentCategoryJoins">
+        LEFT JOIN area_content_category AS b ON a.parent_id = b.id
+    </sql>
+
+
+    <!--查看表中的所有内容-->
+    <select id="selectAll" resultType="com.hzxy.domain.entity.Category">
+        SELECT
+        <include refid="tbContentCategoryColumns"/>
+        FROM
+        area_content_category AS a
+        <include refid="tbContentCategoryJoins"/>
+        ORDER BY
+        a.parent_id ASC,
+        a.sort_order ASC,
+        a.name ASC,
+        a.is_parent DESC
+    </select>
+
+
+   <!--查询该系统下的所有分类-->
+   <select id="selectByName" resultType="com.hzxy.domain.entity.Category">
+        SELECT
+        <include refid="tbContentCategoryColumns"/>
+        FROM
+        area_content_category AS a
+       <include refid="tbContentCategoryJoins"/>
+       where b.name=#{category.name}
+    </select>
+
+
+
+
+
+</mapper>

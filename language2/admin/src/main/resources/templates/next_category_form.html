@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <th:block th:include="include/header-plugins :: header"></th:block>
+    <title>控制面板</title>
+
+</head>
+<body style="min-height:800px; height: auto">
+<div class="container-fluid">
+
+    <nav class="navbar navbar-default row no-yj  navbar-fixed-top" th:include="include/common :: nav">
+    </nav>
+
+
+    <div class="row" style="margin-top:70px" >
+        <div class="  nav-left col-md-2 no-padding" id="nav-list-left" th:include="include/common :: left_menu"></div>
+
+        <div class="col-md-1"></div>
+
+        <div class="main-right  col-md-8 col-md-offset-2">
+            <div class="panel" style="background-color:#f5f5f5;">
+                <div class="panel-heading bk-bg-primary">
+                    <h4 th:text="${category.id==null}?新增分类 : 编辑分类"><i class="glyphicon glyphicon-align-justify"></i></h4>
+                </div>
+                <div class="panel-body">
+                    <form  action="/content/category/save" method="post"  th:object="${category}"class="form-horizontal ">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="id"></label>
+                            <div class="col-md-9">
+                                <input type="hidden" id="id" name="id" th:value="*{id}" placeholder="请输入新增的目录名" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="parentId">父级类目</label>
+                            <div class="col-md-9">
+                                 <input type="hidden" id="parentId" name="parent.id" th:value="*{parent.id}"/>
+                                <input type="text" id="parentName" name="parent.name" class="form-control" placeholder="请选择" readonly="true"   th:value="*{parent.name}" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="name">分类名称</label>
+                            <div class="col-md-9">
+                                <input  id="name" name="name" th:value="*{name}" class="form-control required" placeholder="分类名称"required />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="sortOrder">分类排序</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="sortOrder" name="sortOrder" th:value="*{sortOrder}" placeholder="请输入排序号"required />
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="actions">
+                            <input type="button" class="btn btn-info button-previous" name="previous" onclick="history.go(-1);"  value="返回" />
+                            <input type="submit" class="btn btn-primary button-next pull-right" name="next" value="提交" />
+                            <input type="button" class="btn btn-success button-finish pull-right" name="finish" value="Finish" style="display:none"/>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+</body>
+</html>
+

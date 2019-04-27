@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hzxy.show.dao.ConentDao" >
+    <sql id="base_content">
+      a.id,
+      a.yanyu,
+      a.geyao,
+      a.gushi,
+      a.jinji,
+      a.qiyu,
+      a.dancantuce,
+      a.content,
+      a.pic1,
+      a.pic2,
+      a.pic3,
+      a.pic4,
+      a.video1,
+      a.video2,
+      a.video3,
+      a.video4,
+      a.created,
+      a.updated,
+      b.id AS "category.id",
+      b.name AS "category.name"
+ </sql>
+
+
+
+    <sql id="tbContentJoins">
+        LEFT JOIN area_content_category AS b ON a.category_id = b.id
+    </sql>
+
+
+    <!--查看表中的所有内容11-->
+    <select id="selectAll" resultType="com.hzxy.domain.entity.AreaContent">
+        SELECT
+        <include refid="base_content"/>
+        from
+        area_content as a
+        <include refid="tbContentJoins" />
+        where
+        b.name=#{category.name}
+    </select>
+
+
+</mapper>

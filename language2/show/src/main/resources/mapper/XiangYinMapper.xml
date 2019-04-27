@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hzxy.show.dao.XiangyinDao" >
+    <sql id="base_content">
+          id,
+          name,
+          type,
+          record,
+          video,
+          created,
+          updated
+    </sql>
+
+    <!--查看表中的所有内容-->
+    <select id="selectAll" resultType="com.hzxy.domain.entity.XiangYin" parameterType="java.util.Map" >
+        SELECT
+        <include refid="base_content"/>
+        from
+        xiangyin
+        <where>
+            <if test="name !=null">
+                AND name LIKE  CONCAT('%',#{name},'%')
+            </if>
+        </where>
+
+        order by updated desc
+
+    </select>
+
+
+    <select id="count" resultType="java.lang.Integer" parameterType="java.util.Map" >
+        SELECT COUNT(*) FROM xiangyin
+
+        <where>
+            <if test="name !=null">
+                AND  name LIKE  CONCAT('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+
+
+
+    <!--插入记录-->
+    <insert id="insert" parameterType="com.hzxy.domain.entity.XiangYin">
+
+        INSERT  INTO xiangyin
+        (
+          name,
+          type,
+          record,
+          video,
+          created,
+          updated
+        )
+        VALUES
+        (
+        #{name},
+        #{type},
+        #{record},
+        #{video},
+        #{created},
+        #{updated}
+        )
+
+    </insert>
+
+    <!--根据id查找信息-->
+    <select id="selectById" resultType="com.hzxy.domain.entity.XiangYin">
+        SELECT
+        <include refid="base_content"/>
+        from
+        xiangyin
+        as a
+        where a.id=#{id}
+    </select>
+
+
+    <!--根据id查找信息-->
+    <select id="selectByType" resultType="com.hzxy.domain.entity.XiangYin">
+        SELECT
+        <include refid="base_content"/>
+        from
+        xiangyin
+        as a
+        where a.type=#{type}
+    </select>
+
+</mapper>

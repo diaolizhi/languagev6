@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <th:block th:include="include/header-plugins :: header"></th:block>
+    <title>控制面板</title>
+    <style type="text/css">
+        tbody td  a{
+            color:white !important;
+        }
+    </style>
+
+</head>
+<body style="min-height:800px; height: auto">
+<div class="container-fluid">
+
+    <nav class="navbar navbar-default row no-yj  navbar-fixed-top" th:include="include/common :: nav">
+    </nav>
+
+
+    <div class="row" style="margin-top:70px" >
+        <div class="  nav-left col-md-2 no-padding" id="nav-list-left" th:include="include/common :: left_menu"></div>
+
+        <div class="main-right  col-md-10 col-md-offset-2">
+            <!--引入删除警告模态框-->
+            <div th:include="include/delete_modal :: deleteWarning"></div>
+
+            <div class="col-md-12">
+                <div class="panel-heading">
+                   <a onclick="history.go(-1);"><i class="glyphicon glyphicon-arrow-left" style="cursor:pointer;">返回</i></a>
+                    <h3 style="text-align: center">分类管理列表</h3>
+                </div>
+                <div class="box-body table-responsive no-padding" >
+                    <table class="table table-hover" id="treeTable">
+                        <thead>
+                        <tr >
+                            <th>ID</th>
+                            <td>名称</td>
+                            <td>排序</td>
+                            <td>操作</td>
+                        </tr>
+
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="entries:${categories}" th:id="${entries.id}" th:pId="${entries.parent.id}">
+                            <th th:text="${entries.id}"></td>
+                            <td th:text="${entries.name}"  ></td>
+                            <td th:text="${entries.sortOrder}"></td>
+                            <td>
+                                <a th:href="'/content/category/form?id='+${entries.id}" type="button" class="btn btn-sm btn-default btn-primary">编辑</a>
+                                <a  th:onclick="'javascript:deleteById2(\''+${entries.id}+'\');'" type="button" class="btn btn-sm btn-default  btn-danger">删除</a>
+                                <a th:href="'/content/category/form?parent.id='+${entries.id}+'&parent.name='+${entries.name}" type="button" class="btn btn-sm btn-primary">添加下级菜单</a>
+
+
+
+
+
+
+
+                            </td>
+                        </tr>
+
+
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+</body>
+</html>
+<script>
+
+
+
+
+ function deleteById2(id){
+       var deleteurl="/content/category/delete";
+       if(confirm("确定删除吗")){
+               $.ajax({
+                   "url": deleteurl,
+                   "type": "post",
+                   "dataType": "JSON",
+                   "data": {"ids" : id.toString()},
+                   "success": function (data) {
+                       alert("删除成功！")
+                    window.location.reload();
+                   }
+               });
+
+       }else{
+       }
+   }
+
+    $(function () {
+        $('#treeTable').treeTable({
+            expendLevel:3,
+            column:0
+        })
+    });
+
+</script>
+

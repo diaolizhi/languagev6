@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:include="include/header :: head_copy"></th:block>
+    <title>区域语种</title>
+    <style>
+        h3,#main,#footer{
+
+            margin-bottom: 10px;
+        }
+
+        #main{
+            height: auto;
+            padding:10px;
+            background-color: white;
+            opacity: 0.5;
+        }
+
+        #main ul {
+            list-style-type: none;
+        }
+
+        #main ul li a{
+            width: 150px;
+            height: 120px;
+            float:left;
+            background-color: #c8e5bc;
+            margin: 5px;
+            text-align: center;
+            line-height:120px;
+            font-size: 16px;
+            font-weight: bolder;
+            cursor: pointer;
+
+
+        }
+
+        #main ul li  a:hover{
+            background-color: #67b168;
+        }
+
+    </style>
+</head>
+<body style="background: url('/static/image/admin.jpg') no-repeat  ; background-size: 100%;  " >
+
+<div class="container">
+    <!--导航条-->
+    <div class="row" >
+        <div id="header" th:include="include/common :: copy_nav"  class="col-md-12 col-sm-12 col-xs-12 ">
+        </div>
+    </div>
+
+    <!--标题-->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <h3 th:text="${areName}" id="name"></h3>
+
+        </div>
+    </div>
+
+    <!--主要内容-->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" id="main">
+            <ul id="lie">
+
+            </ul>
+        </div>
+    </div>
+
+
+
+    <!--footer-->
+    <div class="row">
+        <div id="footer" th:include="include/common :: copy_footer" class="col-md-12 col-sm-12 col-xs-12"></div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+       var name= $("#name").text();
+        $.ajax({
+            async : true,
+            type: 'get',
+            dataType: 'json',
+            url: '/show/category/category?name='+name,
+            success: function (data) {
+                for(var i=0;i<data.data.total;i++){
+                    $("#lie").append('<li ><a  href="/language/'+data.data.data[i].name+'">' + data.data.data[i].name + '</a></li>');
+                }
+
+
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

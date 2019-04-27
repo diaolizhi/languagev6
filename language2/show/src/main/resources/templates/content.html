@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:include="include/header :: head_copy"></th:block>
+    <title>内容</title>
+    <style>
+        h3,#main,#footer,#content{
+
+            margin-bottom: 10px;
+        }
+
+        #main,#content{
+            height: auto;
+            padding:10px;
+            background-color: white;
+            opacity: 0.5;
+        }
+        #content p,  #content div{
+            text-align: left;
+            padding: 0px ;
+            margin: 0px;
+        }
+
+        #main ul {
+            list-style-type: none;
+        }
+
+        #main ul li a{
+            width: 154px;
+            height: 120px;
+            float:left;
+            background-color: #c8e5bc;
+            margin: 5px;
+            text-align: center;
+            line-height:120px;
+            font-size: 16px;
+            font-weight: bolder;
+            cursor: pointer;
+
+
+        }
+
+        #main ul li  a:hover{
+            background-color: #67b168;
+        }
+
+        #content{
+            min-height: 500px;
+        }
+
+    </style>
+</head>
+<body style="background: url('/static/image/admin.jpg') no-repeat  ; background-size: 100%;  " >
+
+<div class="container">
+    <!--导航条-->
+    <div class="row" >
+        <div id="header" th:include="include/common :: copy_nav"  class="col-md-12 col-sm-12 col-xs-12 ">
+        </div>
+    </div>
+
+    <!--标题-->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <h3 th:text="${language}" id="name"></h3>
+
+        </div>
+    </div>
+
+    <!--主要内容-->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" id="main">
+            <ul id="lie">
+                <li><a>谚语俗语</a></li>
+                <li><a>歌谣</a></li>
+                <li><a>故事</a></li>
+                <li><a>口彩禁忌</a></li>
+                <li><a>暨语</a></li>
+                <li><a>典藏图册</a></li>
+                <li><a  th:href="'/content/'+${language}+'/video'">相关视频</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12" id="content">
+
+        </div>
+    </div>
+
+
+
+    <!--footer-->
+    <div class="row">
+        <div id="footer" th:include="include/common :: copy_footer" class="col-md-12 col-sm-12 col-xs-12"></div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        var name= $("#name").text();
+        $.ajax({
+            async : true,
+            type: 'get',
+            dataType: 'json',
+            url: '/show/content/lists?name='+name,
+            success: function (data) {
+
+                //$("#content").text(data.data.data.data[0].content);
+
+                $("#content").html(data.data.data.data[0].content);
+            }
+
+            });
+        });
+
+
+</script>
+</body>
+</html>
